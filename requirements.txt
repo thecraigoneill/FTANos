@@ -1,0 +1,8 @@
+numpy
+scipy
+matplotlib
+numba
+disba
+obspy
+pandas
+sys

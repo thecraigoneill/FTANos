@@ -1,5 +1,5 @@
 
-from FTAN_modules import *
+from FTANos import *
 
 #input the filename of the passive seismic data
 sfile = "example_trace.sac"
@@ -9,7 +9,7 @@ sfile = "example_trace.sac"
 # vel2 = 1400
 # T1 = 1.0/freq2
 # T2 = 1.0/freq1
-outfile = FTAN_modules(filename=sfile)# all the parameters listed can be changed according to the survey or set as default
+outfile = FTANos(filename=sfile)# all the parameters listed can be changed according to the survey or set as default
 # # # #plot FTAN map
 outfile.plot_FTAN()
 outfile.plot_digitise()

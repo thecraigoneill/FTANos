@@ -3,9 +3,9 @@ FTAN analysis and inversion of seismic surface waves
 
 ## Installation
 
-git clone https://github.com/thecraigoneill/FTANos
-cd FTANos
-pip install .
+git clone https://github.com/thecraigoneill/FTANos \n
+cd FTANos \n
+pip install . \n
 
 Make sure you have the requirements installed as noted in the requirements.txt file. We recommend an anaconda environment with disba and obspy installed. 
 

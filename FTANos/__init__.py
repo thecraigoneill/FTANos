@@ -1,2 +1,2 @@
-from .FTANos import FTANos
+from .FTANos import FTANos, MCMC
 

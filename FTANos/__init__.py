@@ -1,2 +1,2 @@
-from .FTANos import FTANos, MCMC
+from .FTANos import FTANos, FTAN_Invert 
 

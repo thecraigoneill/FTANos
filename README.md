@@ -22,7 +22,6 @@ The user then follows the prompts to click the origin, x max, and y max of the p
 
 A second code, found in Examples/run_FTAN.py, then runs an inversion, using a staggered Nelder-Mead simplex, and Markov-Chain Monte Carlo (MCMC) approach. This should give a result like this:
 
-![Screen Shot 2023-11-09 at 1 12 20 pm](https://github.com/thecraigoneill/FTANos/assets/30849698/118a8c7f-c68b-44eb-8c6f-7e38f06c48d2)
 
 ![results](https://github.com/thecraigoneill/FTANos/assets/30849698/6f843c8e-fea3-4cae-87f4-4f6b06e7218a)
 

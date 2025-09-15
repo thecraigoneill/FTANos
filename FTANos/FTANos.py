@@ -73,10 +73,10 @@ class FTANos(object):
 				 dist = 30,
 				 alpha = 25,
 				 dt = 0.00025,
-                 		 ftan_sc = 60,
+                 ftan_sc = 60,
 				 filename = None,
-                 		 filetype = None,
-                 		 im_file = None
+                 filetype = None,
+                 im_file = None
 					):
 
         self.fre1 = fre1
@@ -1309,6 +1309,7 @@ class FTAN_Invert:
         disp_obs=(self.t,self.disp_curve)        
 
         return(ultimate_velMod, ultimate_Vs, std, best, disp, disp_obs)
+
 
 
 

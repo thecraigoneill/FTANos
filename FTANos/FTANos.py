@@ -47,6 +47,9 @@ class FTANos(object):
     self.filename : string
                     Filename of SAC file containing the seismic trace. Uses obspy to read.
 
+    self.filetype : string
+                    Filetype, SAC or Tromino MOHO
+
     self.st : Obspy stream
               Obspy formatted stream object of the imported sac file
 
@@ -70,9 +73,10 @@ class FTANos(object):
 				 dist = 30,
 				 alpha = 25,
 				 dt = 0.00025,
-                 ftan_sc = 60,
+                 		 ftan_sc = 60,
 				 filename = None,
-                 im_file = None
+                 		 filetype = None,
+                 		 im_file = None
 					):
 
         self.fre1 = fre1
@@ -86,11 +90,58 @@ class FTANos(object):
         self.dist = dist
         self.ftan_sc = ftan_sc
         self.filename = filename
-        self.st = read(self.filename, format="SAC")
-        self.tr = self.st[0].detrend()
-        self.x = self.tr.data
+        self.filetype = filetype
+        if (self.filetype == "SAC"):
+            self.st = read(self.filename, format="SAC")
+            self.tr = self.st[0].detrend()
+            self.x = self.tr.data
+        if (self.filetype == "MOHO"):
+            self.x, self.dt = self.import_HVSR(self.filename)
         self.dom = 1/(len(self.x)*self.dt)
         self.im_file = self.filename+".png"
+
+    def import_HVSR(self,filename = None,
+                 header_lines = 34,
+                 E_col = 1,
+                 N_col = 0,
+                 Z_col = 2,
+                 W_col = 3,
+                 time1 = 0.0,
+                 time2 = 1.0,
+                 freq = 1024
+                    ):
+        file= filename
+        header = header_lines
+        dt = 1/freq
+
+        # Traditionally using Z for Rayleigh wave ftan
+        #EW=np.genfromtxt(file,skip_header=header,usecols=E_col,encoding= 'unicode_escape')
+        #NS=np.genfromtxt(file,skip_header=header,usecols=N_col,encoding= 'unicode_escape')
+        Z=np.genfromtxt(file,skip_header=header,usecols=Z_col,encoding='unicode_escape')
+        w=np.genfromtxt(file,skip_header=header,usecols=W_col,encoding='unicode_escape')
+
+
+        #time1=np.fromstring(str(time1),sep=':') # These are defined in MOHO header file
+        #time2=np.fromstring(str(time2),sep=':')
+        #seconds = 3600*(time2[0] - time1[0]) + 60*(time2[1]-time1[1]) + (time2[2] - time1[2])
+        #samples=seconds*self.freq
+        #time = np.linspace(0.0,seconds,int(samples))
+        t1 = np.arange(0,len(Z),dt)
+        # Get triggers + 1sec
+        idc = np.argwhere(w != 0)[:,0]
+        n=2
+        zz=0.0
+        for i in range(len(idc)):
+            n1 = int(idc[i])
+            n2 = int(idc[i] + 1024) #1 sec
+            tt =  t1[ n1:n2 ] - t1[n1]  
+            zz += Z[n1:n2] #Stacking these
+        zz /= i
+
+        return(zz,dt)
+
+
+
 
     def times(self,):
         """
